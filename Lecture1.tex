@@ -1,0 +1,378 @@
+\documentclass[aspectratio=169]{beamer}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+\usefonttheme{professionalfonts}
+
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+\setbeamertemplate{navigation symbols}{}
+
+\title[Combustion]{UCK 427E -- Combustion}
+\subtitle{Introduction and Course Overview}
+\author{Prof.\ Dr.\ Onur Tun\c{c}er}
+\institute{Istanbul Technical University}
+\date{February 12\textsuperscript{th}, 2026}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Why Study Combustion?}
+\begin{itemize}
+  \item More than 80\% of global energy conversion involves combustion
+  \item Central to aerospace propulsion systems:
+  \begin{itemize}
+    \item Gas turbines
+    \item Rocket engines
+    \item Afterburners
+  \end{itemize}
+  \item Critical for:
+  \begin{itemize}
+    \item Efficiency
+    \item Emissions
+    \item Stability and safety
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Combustion Is Multidisciplinary}
+
+\begin{block}{Core Disciplines}
+\begin{itemize}
+  \item Thermodynamics
+  \item Fluid mechanics
+  \item Chemical kinetics
+  \item Heat and mass transfer
+\end{itemize}
+\end{block}
+
+\pause
+
+\begin{block}{Why It Is Challenging?}
+\begin{itemize}
+  \item Strongly coupled physics
+  \item Nonlinear behavior
+  \item Wide range of time and length scales
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{How Combustion Is Studied Today}
+\begin{itemize}
+  \item Analytical models (limited but insightful)
+  \item Experiments (expensive, complex)
+  \item \alert{Computational modeling} (dominant tool today)
+\end{itemize}
+
+\vspace{0.5cm}
+
+\begin{block}{This Course}
+
+We combine:
+
+\begin{itemize}
+  \item Fundamental theory
+  \item Computational modeling
+  \item Physical interpretation
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Modeling Hierarchy in Combustion}
+
+\begin{center}
+\begin{tabular}{c}
+CFD / LES / DNS \\ \hline
+1-D Flames \\ \hline
+0-D Reactors \\ \hline
+Chemical Kinetics \& Thermodynamics
+\end{tabular}
+\end{center}
+
+\vspace{0.4cm}
+
+\begin{itemize}
+  \item This course focuses on 0-D and 1-D models
+  \item These form the foundation of all CFD combustion models
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Course Objectives}
+
+\begin{itemize}
+  \item Understand physical principles of combustion
+  \item Analyze reacting flow systems
+  \item Model combustion processes computationally
+  \item Develop intuition for flame behavior and emissions
+\end{itemize}
+\end{frame}
+
+\begin{frame}{What You Will Learn}
+
+\begin{itemize}
+  \item Chemical thermodynamics of reacting mixtures
+  \item Chemical kinetics and reaction mechanisms
+  \item Premixed and diffusion flames
+  \item Spray and turbulent combustion (conceptual)
+  \item Computational combustion modeling using C++
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Computational Tools}
+
+\begin{block}{Software}
+\begin{itemize}
+  \item C++ (primary language)
+  \item CANTERA (thermochemistry and kinetics)
+  \item Python or MATLAB (optional post-processing)
+\end{itemize}
+\end{block}
+
+\pause
+
+\begin{block}{Why C++?}
+\begin{itemize}
+  \item Performance
+  \item Industry relevance
+  \item Full control over models
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Course Structure}
+\begin{itemize}
+  \item Lectures: theory and physical understanding
+  \item Homeworks: computational modeling
+  \item Midterm and final exam
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{block}{Expectation}
+This is a senior-level engineering course requiring:
+\begin{itemize}
+  \item Mathematical maturity
+  \item Programming discipline
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Homework Philosophy}
+\begin{itemize}
+  \item Homework assignments are computational
+  \item Focus on understanding, not coding volume
+  \item Clean, readable, reproducible code expected
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{block}{Tentative Topics}
+\begin{itemize}
+  \item Adiabatic flame temperature
+  \item Auto-ignition
+  \item Laminar flame speed
+  \item Emissions formation
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Evaluation}
+\begin{center}
+\begin{tabular}{l c}
+Midterm Exam & 10\% \\
+Homeworks (5) & 50\% \\
+Final Exam & 40\%
+\end{tabular}
+\end{center}
+\end{frame}
+
+\begin{frame}{What Comes Next?}
+\begin{itemize}
+  \item Review of thermochemistry
+  \item Ideal gas mixtures
+  \item Enthalpy, entropy, and equilibrium
+\end{itemize}
+
+\vspace{0.5cm}
+
+\centering
+\alert{Please install Cantera before next week}
+\end{frame}
+
+\begin{frame}{Cantera Resources}
+
+\begin{block}{Official Website}
+\centering
+\Large
+\href{https://cantera.org}{\textbf{cantera.org}}
+\end{block}
+
+\vspace{0.4cm}
+
+\begin{itemize}
+  \item Documentation
+  \item C++ Tutorials
+  \item Examples and YAML mechanisms
+\end{itemize}
+
+\end{frame}
+
+
+
+\begin{frame}{Thermodynamic Description of Matter}
+\begin{block}{Fundamental Question}
+How do we describe the state of a reacting system?
+\end{block}
+
+\vspace{0.3cm}
+
+A thermodynamic state is defined by a set of measurable properties.
+
+\vspace{0.3cm}
+
+Examples:
+\begin{itemize}
+  \item Pressure
+  \item Temperature
+  \item Volume
+  \item Internal energy
+  \item Enthalpy
+  \item Entropy
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Intrinsic vs Extrinsic Properties}
+
+\begin{block}{Intrinsic (Intensive) Properties}
+Independent of system size or mass.
+\end{block}
+
+Examples:
+\begin{itemize}
+  \item Temperature
+  \item Pressure
+  \item Density
+  \item Specific internal energy
+  \item Specific enthalpy
+\end{itemize}
+
+\pause
+
+\begin{block}{Extrinsic (Extensive) Properties}
+Depend on the size or amount of matter.
+\end{block}
+
+Examples:
+\begin{itemize}
+  \item Mass
+  \item Total internal energy
+  \item Total enthalpy
+  \item Volume
+  \item Entropy
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Mathematical Definition}
+
+\begin{block}{Extensive Property}
+If system size is scaled by factor $\lambda$:
+
+\[
+X \rightarrow \lambda X
+\]
+
+\end{block}
+
+
+\begin{block}{Intensive Property}
+Remains unchanged when system size is scaled:
+
+\[
+x = \frac{X}{m}
+\]
+
+\end{block}
+
+\vspace{0.3cm}
+
+Example:
+
+\[
+u = \frac{U}{m}, \quad h = \frac{H}{m}
+\]
+
+\end{frame}
+
+\begin{frame}{Why This Matters in Combustion}
+
+\begin{itemize}
+  \item Combustion chambers contain reacting mixtures
+  \item Chemical reactions change composition
+  \item We must distinguish:
+  \begin{itemize}
+    \item Total energy in chamber (extensive)
+    \item Energy per unit mass (intensive)
+  \end{itemize}
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{block}{Key Idea}
+Reaction rates depend on intensive properties.
+\end{block}
+
+\end{frame}
+
+\begin{frame}{Mixtures and Specific Quantities}
+
+For a reacting mixture:
+
+\[
+U = \sum_i m_i u_i
+\]
+
+Specific internal energy:
+
+\[
+u = \sum_i Y_i u_i
+\]
+
+where:
+\begin{itemize}
+  \item $Y_i$ = mass fraction
+  \item $u_i$ = specific internal energy of species $i$
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{State Postulate for Reacting Systems}
+
+For a simple compressible reacting system:
+
+\[
+\text{State} = f(T, P, \{Y_i\})
+\]
+
+\vspace{0.5cm}
+
+Temperature + Pressure + Composition
+\end{frame}
+
+\begin{frame}
+\centering
+\Large Questions?
+\end{frame}
+
+\end{document}
+
