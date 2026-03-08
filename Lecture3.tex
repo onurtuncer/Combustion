@@ -1,0 +1,384 @@
+\documentclass[aspectratio=169]{beamer}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+\usefonttheme{professionalfonts}
+
+\usepackage{amsmath,amssymb,bm}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{mathtools}
+
+% Vectors
+\newcommand{\grad}{\bm{\nabla}}
+\newcommand{\J}{\bm{J}}
+\newcommand{\N}{\bm{N}}
+\newcommand{\jvec}{\bm{j}}
+\newcommand{\uvec}{\bm{u}}
+
+\title[Fick for Gases]{Engineering Transport Derivation of Fick's Law for Gases}
+\subtitle{From Species Conservation + Stefan--Maxwell to Mixture-Averaged / Dilute Limits}
+\author{}
+\institute{}
+\date{}
+
+\begin{document}
+
+% ==========================================================
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% ==========================================================
+\begin{frame}{What ``Fick's law'' means in gas-phase engineering}
+In gases, engineers distinguish:
+\begin{itemize}
+  \item \textbf{Total species flux} (in a fixed lab frame): $\N_i$ [\si{mol.m^{-2}.s^{-1}}]
+  \item \textbf{Diffusive flux relative to the mixture motion}: $\J_i$ or $\jvec_i$
+  \item \textbf{Bulk (convective) transport} carried by the mixture velocity $\uvec$
+\end{itemize}
+
+\vspace{0.3cm}
+You will see \emph{multiple} ``Fick forms'' depending on variables and frame:
+\[
+\J_i = - c\,D_{i,m}\,\grad x_i \quad \text{or} \quad
+\jvec_i = - \rho\,D_{i,m}\,\grad Y_i
+\]
+where $x_i$ = mole fraction, $Y_i$ = mass fraction, $c$ = total molar concentration, $\rho$ = density.
+\end{frame}
+
+% ==========================================================
+\begin{frame}{Step 1: Species conservation (continuum, reacting/nonreacting)}
+Molar form for species $i$:
+\[
+\boxed{\pdv{c_i}{t} + \grad\cdot \N_i = \dot{\omega}_i}
+\]
+\begin{itemize}
+  \item $c_i$ [\si{mol.m^{-3}}], $\N_i$ [\si{mol.m^{-2}.s^{-1}}]
+  \item $\dot{\omega}_i$ is molar production by reactions (set to 0 for nonreacting)
+\end{itemize}
+
+Mass form:
+\[
+\boxed{\pdv{(\rho Y_i)}{t} + \grad\cdot(\rho Y_i \uvec + \jvec_i) = \dot{\omega}_{i,\text{mass}}}
+\]
+Key: we must model $\N_i$ (or $\jvec_i$).
+\end{frame}
+
+% ==========================================================
+\begin{frame}{Step 2: Flux decomposition and frames}
+Define mixture-average velocity $\uvec$ (mass-average is common in CFD):
+\[
+\uvec \equiv \sum_i Y_i \uvec_i
+\]
+
+Total molar flux in the lab frame decomposes as:
+\[
+\boxed{\N_i = c_i \uvec + \J_i}
+\]
+where
+\begin{itemize}
+  \item $c=\sum_i c_i$ (total molar concentration),
+  \item $\J_i$ is the \textbf{diffusive molar flux relative to $\uvec$}.
+\end{itemize}
+
+Mass-flux analogue:
+\[
+\boxed{\rho Y_i \uvec + \jvec_i}
+\qquad\text{with}\qquad \sum_i \jvec_i = \bm{0}
+\]
+(when $\uvec$ is mass-average).
+\end{frame}
+
+% ==========================================================
+\begin{frame}{Step 3: What drives diffusion in gases (engineering view)}
+In gas mixtures, diffusion is driven by gradients in:
+\begin{itemize}
+  \item composition ($x_i$, $Y_i$),
+  \item pressure (barodiffusion),
+  \item temperature (thermal diffusion / Soret effect),
+  \item external body forces (e.g., electric fields for ions).
+\end{itemize}
+
+\vspace{0.2cm}
+\textbf{Engineering simplification (most common):}
+\begin{itemize}
+  \item ideal gas mixture
+  \item low Mach / modest pressure gradients
+  \item negligible Soret and barodiffusion
+  \item isothermal or weak $\grad T$
+\end{itemize}
+Then diffusion is mainly due to \textbf{composition gradients}.
+
+\vspace{0.25cm}
+The rigorous multicomponent closure is Stefan--Maxwell.
+\end{frame}
+
+% ==========================================================
+\begin{frame}{Step 4: Stefan--Maxwell equations (multicomponent gases)}
+For an ideal gas mixture (no body forces, ignoring Soret/barodiffusion), Stefan--Maxwell gives:
+\[
+\boxed{
+\grad x_i = \sum_{j\neq i}\frac{x_i x_j}{D_{ij}}\left(\frac{\uvec_j-\uvec_i}{1}\right)\frac{p}{p}
+}
+\]
+
+Engineering form in terms of \textbf{diffusive molar fluxes} relative to a chosen reference velocity:
+\[
+\boxed{
+-\grad x_i = \sum_{j\neq i}\frac{x_j \J_i - x_i \J_j}{c\,D_{ij}}
+}
+\]
+where
+\begin{itemize}
+  \item $D_{ij}$ is the \textbf{binary (Maxwell--Stefan) diffusivity} of pair $(i,j)$,
+  \item $c=p/(RT)$ for ideal gases.
+\end{itemize}
+
+This is the ``first-principles'' engineering starting point for gas diffusion closures.
+\end{frame}
+
+% ==========================================================
+\begin{frame}{Constraint: fluxes must sum to zero in the mixture frame}
+If $\uvec$ is the \textbf{molar-average} velocity, then
+\[
+\sum_i \J_i = \bm{0}
+\]
+If $\uvec$ is the \textbf{mass-average} velocity, then
+\[
+\sum_i \jvec_i = \bm{0}
+\]
+
+These constraints matter because \textbf{Stefan--Maxwell is coupled}: $\J_i$ depends on all $\J_j$.
+Fick’s law emerges only after a simplifying limit/closure.
+\end{frame}
+
+% ==========================================================
+\begin{frame}{Binary mixture: Stefan--Maxwell $\Rightarrow$ Fick exactly}
+Consider only species $A$ and $B$.
+
+Stefan--Maxwell reduces to:
+\[
+-\grad x_A = \frac{x_B \J_A - x_A \J_B}{c\,D_{AB}}
+\]
+With the molar-average frame constraint $\J_A+\J_B=0 \Rightarrow \J_B=-\J_A$:
+\[
+-\grad x_A = \frac{(x_B+x_A)\J_A}{c\,D_{AB}} = \frac{\J_A}{c\,D_{AB}}
+\]
+Hence:
+\[
+\boxed{\J_A = -c\,D_{AB}\,\grad x_A}
+\]
+This is a clean derivation: \textbf{in a binary ideal gas}, Fick’s law holds (for the diffusive flux in the molar-average frame).
+\end{frame}
+
+% ==========================================================
+\begin{frame}{From diffusive flux to total flux (what you measure)}
+Total molar flux:
+\[
+\N_A = c_A \uvec + \J_A
+\]
+Thus, even with Fickian diffusion:
+\[
+\boxed{\N_A = c_A \uvec - c\,D_{AB}\,\grad x_A}
+\]
+
+Two important special cases:
+\begin{itemize}
+  \item \textbf{No bulk motion} ($\uvec=\bm{0}$): $\N_A = -cD_{AB}\grad x_A$
+  \item \textbf{With bulk flow}: diffusion rides on top of convection
+\end{itemize}
+
+This is why CFD codes always write:
+\[
+\text{(convection)} + \text{(diffusion)}
+\]
+\end{frame}
+
+% ==========================================================
+\begin{frame}{Multicomponent mixture: mixture-averaged approximation}
+For $n$ species, solving full Stefan--Maxwell is expensive.
+
+A common engineering closure: \textbf{mixture-averaged diffusion}
+\[
+\boxed{\J_i \approx -c\,D_{i,m}\,\grad x_i}
+\]
+where $D_{i,m}$ is the effective diffusivity of species $i$ into the mixture.
+
+A widely used formula (good for ideal gases, moderate gradients) is:
+\[
+\boxed{
+D_{i,m} = \frac{1-x_i}{\sum\limits_{j\neq i}\frac{x_j}{D_{ij}}}
+}
+\]
+
+Notes:
+\begin{itemize}
+  \item If species $i$ is dilute ($x_i\ll 1$), then $D_{i,m}\approx \left(\sum_{j\neq i}x_j/D_{ij}\right)^{-1}$.
+  \item Coupling is collapsed into a single scalar $D_{i,m}$.
+\end{itemize}
+\end{frame}
+
+% ==========================================================
+\begin{frame}{Dilute-species limit: Fick becomes natural}
+Let species $A$ be dilute in a carrier gas mixture (everything except $A$ is the ``bath''):
+\[
+x_A \ll 1,\quad x_{\text{bath}}\approx 1
+\]
+Then (mixture-averaged):
+\[
+\J_A \approx -c\,D_{A,m}\,\grad x_A,
+\qquad
+D_{A,m}\approx \left(\sum_{j\neq A}\frac{x_j}{D_{Aj}}\right)^{-1}
+\]
+If the bath is essentially a \textbf{single} carrier $B$:
+\[
+D_{A,m}\approx D_{AB}
+\]
+So you recover the familiar binary Fick form with a physically meaningful diffusivity.
+\end{frame}
+
+% ==========================================================
+\begin{frame}{Engineering forms: mole fraction vs concentration vs partial pressure}
+For ideal gases:
+\[
+c=\frac{p}{RT},\qquad c_i = x_i c,\qquad p_i = x_i p
+\]
+
+From
+\[
+\J_i = -c D_{i,m}\grad x_i
+\]
+you can write equivalent versions:
+
+\textbf{In terms of concentration:}
+\[
+\J_i = -D_{i,m}\left(\grad c_i - x_i \grad c\right)
+\]
+\textbf{At constant $p,T$ (so $c$ constant):}
+\[
+\boxed{\J_i = -D_{i,m}\,\grad c_i}
+\]
+\textbf{In terms of partial pressure (constant $T$):}
+\[
+\boxed{\J_i = -\frac{D_{i,m}}{RT}\,\grad p_i}
+\]
+These are the standard engineering identities used in gases.
+\end{frame}
+
+% ==========================================================
+\begin{frame}{Mass-fraction form (common in CFD)}
+Many solvers use mass fractions $Y_i$ and mass-average velocity.
+
+A typical mixture-averaged closure is:
+\[
+\boxed{\jvec_i \approx -\rho\,D_{i,m}\,\grad Y_i}
+\]
+with a correction (in some implementations) to enforce $\sum_i \jvec_i=\bm{0}$ exactly:
+\[
+\jvec_i = -\rho D_{i,m}\grad Y_i + Y_i\sum_k \rho D_{k,m}\grad Y_k
+\]
+So the \textbf{engineering meaning of “Fick’s law”} often is:
+\[
+\text{diffusive mass flux} \propto -\grad Y_i
+\]
+with a mixture constraint correction.
+\end{frame}
+
+% ==========================================================
+\begin{frame}{From flux law + species conservation to diffusion equation}
+Nonreacting, no bulk flow, constant $p,T$ so $c$ constant:
+
+Species conservation:
+\[
+\pdv{c_i}{t} + \grad\cdot \J_i = 0
+\]
+Fick/mixture-averaged:
+\[
+\J_i = -D_{i,m}\grad c_i
+\]
+Thus:
+\[
+\boxed{\pdv{c_i}{t} = \grad\cdot\left(D_{i,m}\grad c_i\right)}
+\]
+If $D_{i,m}$ is constant:
+\[
+\boxed{\pdv{c_i}{t} = D_{i,m}\nabla^2 c_i}
+\]
+This is the gas-phase diffusion equation in its simplest engineering form.
+\end{frame}
+
+% ==========================================================
+\begin{frame}{Important caveat: diffusion in gases can induce bulk flow}
+In gas mixtures, diffusion may create a net molar flux unless constrained.
+
+Classic example: \textbf{Stefan diffusion} (evaporation of $A$ through stagnant $B$).
+Even if $B$ is ``stagnant'', $A$ diffusion can drive a bulk velocity to satisfy overall continuity and boundary constraints.
+
+Engineering takeaway:
+\begin{itemize}
+  \item Use $\N_i = c_i \uvec + \J_i$, not just $\N_i=\J_i$
+  \item ``Stagnant'' does not always mean $\uvec=\bm{0}$
+  \item Stefan--Maxwell captures this naturally; pure Fick needs care
+\end{itemize}
+\end{frame}
+
+% ==========================================================
+\begin{frame}{How gas diffusivity depends on $T$ and $p$ (engineering scaling)}
+For dilute gases, binary diffusivities roughly scale as:
+\[
+D_{AB} \propto \frac{T^{3/2}}{p}
+\]
+More detailed kinetic-theory correlations exist (Chapman--Enskog / collision integrals),
+but the key engineering trend is:
+
+\begin{itemize}
+  \item higher $T$ $\Rightarrow$ faster molecular motion $\Rightarrow$ larger $D$
+  \item higher $p$ (higher density) $\Rightarrow$ more collisions $\Rightarrow$ smaller $D$
+\end{itemize}
+
+\vspace{0.2cm}
+When you see tables of $D_{AB}$, check the stated $T$ and $p$.
+\end{frame}
+
+% ==========================================================
+\begin{frame}{Summary: what we derived and when it is valid}
+\textbf{Starting point (multicomponent, gas-phase):}
+\[
+-\grad x_i = \sum_{j\neq i}\frac{x_j \J_i - x_i \J_j}{cD_{ij}}
+\quad\text{(Stefan--Maxwell)}
+\]
+
+\textbf{Binary ideal gas:} Fick is exact for diffusive flux:
+\[
+\J_A = -cD_{AB}\grad x_A
+\]
+
+\textbf{Multicomponent engineering closure:} mixture-averaged diffusivity:
+\[
+\J_i \approx -cD_{i,m}\grad x_i,\qquad
+D_{i,m} = \frac{1-x_i}{\sum_{j\neq i}x_j/D_{ij}}
+\]
+
+\textbf{Always remember:} total flux = convection + diffusion
+\[
+\N_i = c_i\uvec + \J_i
+\]
+\end{frame}
+
+% ==========================================================
+\begin{frame}{Optional slide: where to go beyond Fick for gases}
+If you need higher fidelity:
+\begin{itemize}
+  \item include Soret (thermal diffusion): $\grad T$ drives $\J_i$
+  \item include barodiffusion: $\grad p$ effects
+  \item use full multicomponent Stefan--Maxwell solver
+  \item consider non-ideal mixtures (real-gas, high pressure): use chemical potentials/fugacities
+  \item include Knudsen diffusion (porous media, small pores)
+\end{itemize}
+
+\vspace{0.25cm}
+In combustion and high-temperature flows, mixture-averaged is common; multicomponent can matter for light species (H, H$_2$).
+\end{frame}
+
+\end{document}
