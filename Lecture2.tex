@@ -1,0 +1,370 @@
+
+\documentclass[aspectratio=169]{beamer}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+\usefonttheme{professionalfonts}
+
+\setbeamertemplate{navigation symbols}{}
+
+\title[Combustion]{UCK 427 -- Combustion}
+\subtitle{Combustion and Thermochemistry}
+\author{Prof.\ Dr.\ Onur Tun\c{c}er}
+\institute{Istanbul Technical University}
+\date{Week 2}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{What Is Combustion?}
+
+\begin{block}{Thermodynamic View}
+Combustion is a chemical reaction process that converts 
+chemical energy into thermal energy.
+\end{block}
+
+\vspace{0.3cm}
+
+Energy release → temperature rise → pressure rise → work potential
+
+\end{frame}
+
+\begin{frame}{Energy Conversion Chain}
+
+Chemical Bond Energy
+\[
+\Downarrow
+\]
+Internal Energy
+\[
+\Downarrow
+\]
+Thermal Energy
+\[
+\Downarrow
+\]
+Mechanical Work (e.g., turbine, rocket)
+
+\end{frame}
+
+\begin{frame}{Thermodynamic Description}
+
+A reacting system state is defined by:
+
+\[
+(T, P, \{Y_i\})
+\]
+
+\pause
+
+Composition is part of the thermodynamic state.
+\end{frame}
+
+\begin{frame}{Intensive vs Extensive Properties}
+
+\textbf{Extensive:}
+\[
+U, H, S, V, m
+\]
+
+\textbf{Intensive:}
+\[
+T, P, \rho, u, h
+\]
+
+\pause
+
+Scaling rule:
+
+\[
+X \rightarrow \lambda X
+\quad
+x = \frac{X}{m}
+\]
+
+\end{frame}
+
+\begin{frame}{Why It Matters}
+
+Reaction rates depend on:
+\begin{itemize}
+  \item Temperature
+  \item Concentration
+\end{itemize}
+
+Total heat release depends on:
+\begin{itemize}
+  \item Total mass of fuel
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Ideal Gas Assumption}
+
+For most combustion systems:
+
+\[
+p_i = \rho_i R_i T
+\]
+
+\pause
+
+Total pressure:
+
+\[
+P = \sum_i p_i
+\]
+
+\end{frame}
+
+\begin{frame}{Mixture Gas Constant}
+
+\[
+P = \rho R_{mix} T
+\]
+
+\[
+R_{mix} = \sum_i Y_i R_i
+\]
+
+\pause
+
+Note: $R_i = \frac{R_u}{M_i}$
+
+\end{frame}
+
+\begin{frame}{Internal Energy of Ideal Gas}
+
+For ideal gases:
+
+\[
+u_i = u_i(T)
+\]
+
+\pause
+
+\[
+du_i = c_{v,i}(T)\, dT
+\]
+
+\end{frame}
+
+\begin{frame}{Internal Energy of Mixture}
+
+\[
+U = \sum_i m_i u_i(T)
+\]
+
+\pause
+
+Specific:
+
+\[
+u = \sum_i Y_i u_i(T)
+\]
+
+\end{frame}
+
+\begin{frame}{Definition of Enthalpy}
+
+\[
+H = U + PV
+\]
+
+\pause
+
+For ideal gases:
+
+\[
+h_i = u_i + R_i T
+\]
+
+\end{frame}
+
+\begin{frame}{Mixture Enthalpy}
+
+\[
+h = \sum_i Y_i h_i(T)
+\]
+
+\pause
+
+Differential form:
+
+\[
+dh = c_p^{mix} dT
+\]
+
+\[
+c_p^{mix} = \sum_i Y_i c_{p,i}
+\]
+
+\end{frame}
+
+\begin{frame}{Reference State}
+
+Absolute enthalpy cannot be measured.
+
+We define:
+
+\[
+h_i(T) = h_i(T_{ref}) + \int_{T_{ref}}^T c_{p,i}(T)\, dT
+\]
+
+Standard reference:
+
+\[
+T_{ref} = 298\,K
+\]
+
+\end{frame}
+
+\begin{frame}{Enthalpy of Formation}
+
+\begin{block}{Definition}
+Energy change when 1 mole of compound forms from elements at standard state.
+\end{block}
+
+Example:
+
+\[
+C + O_2 \rightarrow CO_2
+\]
+
+\[
+\Delta h_f^\circ = -393.5 \text{ kJ/mol}
+\]
+
+\end{frame}
+
+\begin{frame}{Formation Enthalpy of Elements}
+
+By convention:
+
+\[
+\Delta h_f^\circ(\text{O}_2) = 0
+\]
+
+\[
+\Delta h_f^\circ(\text{N}_2) = 0
+\]
+
+\[
+\Delta h_f^\circ(\text{H}_2) = 0
+\]
+
+\end{frame}
+
+\begin{frame}{Total Species Enthalpy}
+
+\[
+h_i(T) = h_{f,i}^\circ + \int_{T^\circ}^{T} c_{p,i}(T)\, dT
+\]
+
+\pause
+
+Two parts:
+\begin{itemize}
+  \item Chemical
+  \item Sensible
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Heat of Reaction}
+
+\[
+\Delta h_r^\circ = 
+\sum \nu_i h_{f,i}^\circ (products)
+-
+\sum \nu_i h_{f,i}^\circ (reactants)
+\]
+
+\pause
+
+Exothermic:
+\[
+\Delta h_r^\circ < 0
+\]
+
+\end{frame}
+
+\begin{frame}{Example: Methane Combustion}
+
+\[
+CH_4 + 2O_2 \rightarrow CO_2 + 2H_2O
+\]
+
+\pause
+
+\[
+\Delta h_r^\circ =
+[-393.5 + 2(-241.8)]
+-
+[-74.8]
+\]
+
+\pause
+
+\[
+\approx -802 \text{ kJ/mol}
+\]
+
+\end{frame}
+
+\begin{frame}{Physical Meaning}
+
+Large negative $\Delta h_r^\circ$:
+
+\begin{itemize}
+  \item Strong chemical bonds formed
+  \item Energy released
+  \item Temperature increases
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Energy Conservation in Combustion}
+
+Adiabatic system:
+
+\[
+H_{reactants} = H_{products}
+\]
+
+\pause
+
+\[
+\text{Chemical energy} \rightarrow \text{Sensible heating}
+\]
+
+\end{frame}
+
+\begin{frame}{Why Flame Temperature Is Limited?}
+
+Temperature rise limited by:
+
+\begin{itemize}
+  \item Heat capacity of the mixture
+  \item Dissociation at high temperature
+  \item Non-ideal effects
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Next Lecture}
+
+\begin{itemize}
+  \item Stoichiometry
+  \item Equivalence ratio
+  \item Adiabatic flame temperature derivation
+  \item First computational example
+\end{itemize}
+
+\end{frame}
+
+
+\end{document}
